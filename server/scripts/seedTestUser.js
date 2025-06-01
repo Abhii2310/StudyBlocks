@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const Profile = require('../models/Profile');
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/studyblocks';
 
@@ -11,13 +12,20 @@ async function seed() {
   const password = 'password123';
   let user = await User.findOne({ email });
   if (!user) {
+    // Create profile for additionalDetails
+    const profile = await Profile.create({
+      gender: 'Other',
+      dateOfBirth: '2000-01-01',
+      about: 'Test user for E2E',
+      contactNumber: 1234567890
+    });
     user = new User({
       firstName: 'Test',
       lastName: 'User',
       email,
       password: await bcrypt.hash(password, 10),
       accountType: 'Student',
-      additionalDetails: mongoose.Types.ObjectId(),
+      additionalDetails: profile._id,
       image: 'https://placehold.co/100x100',
     });
     await user.save();

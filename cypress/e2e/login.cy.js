@@ -7,7 +7,7 @@ describe('Login Flow', () => {
     cy.get('input[name="password"], input[type="password"]').type('password123');
     cy.get('button[type="submit"]').click();
     // Wait for redirect or dashboard text
-    cy.url().should('include', '/dashboard');
-    cy.contains(/dashboard/i);
+    cy.url().should('include', '/dashboard/my-profile');
+    cy.contains(/my profile/i);
   });
 });
