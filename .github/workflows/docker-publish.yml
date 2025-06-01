@@ -27,6 +27,3 @@ jobs:
           context: .
           push: true
           tags: abhii2310/studyblocks:latest
-
-      - name: Image digest
-        run: echo "Image digest is ${{ steps.docker_build.outputs.digest }}"
