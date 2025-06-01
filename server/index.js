@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require("express");
 const app = express();
+const logger = require('./logger');
 
 const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
@@ -56,9 +57,10 @@ app.get("/", (req, res) => {
 
 if (process.env.NODE_ENV !== 'test') {
 	app.listen(PORT, () => {
-		console.log(`App is running at ${PORT}`)
+		logger.info(`Server is running at http://localhost:${PORT}`);
+		// Automated test log for ELK health check
+		logger.info('Test log from backend', { test: true, timestamp: new Date().toISOString() });
 	});
 }
 
-module.exports = app;
-
+module.exports = { app, logger };
