@@ -67,8 +67,6 @@ jobs:
 
     - name: Start React app
       run: npm start &
-      env:
-        CI: true
 
     - name: Wait for app and backend to be ready
       run: npx wait-on http://localhost:3000 http://localhost:4000
