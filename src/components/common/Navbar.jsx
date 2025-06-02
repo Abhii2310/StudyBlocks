@@ -54,7 +54,7 @@ function Navbar() {
         {/* Navigation links */}
         <nav className="hidden md:block">
           <ul className="flex gap-x-6 text-richblack-25">
-            {NavbarLinks.map((link, index) => (
+            {NavbarLinks.filter(link => link.title !== 'Upload Video').map((link, index) => (
               <li key={index}>
                 {link.title === "Catalog" ? (
                   <>

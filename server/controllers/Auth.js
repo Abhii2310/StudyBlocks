@@ -130,6 +130,14 @@ exports.login = async (req, res) => {
       })
     }
 
+    // Restrict login to demo user only
+    if (email !== "demo5@studyblocks.com" || password !== "demopassword") {
+      return res.status(401).json({
+        success: false,
+        message: `Only demo5@studyblocks.com / demopassword can log in for demo`,
+      })
+    }
+
     // Find user with provided email
     const user = await User.findOne({ email }).populate("additionalDetails")
 

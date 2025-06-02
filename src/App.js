@@ -32,6 +32,7 @@ import UploadVideoTest from "./pages/UploadVideoTest";
 import DemoVideos from "./pages/DemoVideos";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 import UploadVideo from "./pages/UploadVideo";
+import UploadVideoPro from "./pages/UploadVideoPro";
 
 function App() {
 
@@ -165,6 +166,8 @@ function App() {
     <Route path="*" element={<Error />} />
 
 
+
+      <Route path="/upload-video-pro" element={<UploadVideoPro />} />
     </Routes>
 
    </div>

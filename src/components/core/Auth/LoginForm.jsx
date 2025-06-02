@@ -19,8 +19,8 @@ function LoginForm() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
-    email: "demo4@studyblocks.com",
-    password: "demopassword",
+    email: "",
+    password: "",
   })
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -33,7 +33,7 @@ function LoginForm() {
   React.useEffect(() => {
     async function tryLogin() {
       if (
-        formData.email === "demo4@studyblocks.com" &&
+        formData.email === "demo5@studyblocks.com" &&
         formData.password === "demopassword"
       ) {
         setLoading(true)
@@ -47,7 +47,7 @@ function LoginForm() {
           })
           let data = await resp.json()
           if (data.success) {
-            window.location.href = "/dashboard/video-test"
+            window.location.href = "/dashboard/upload-video"
             return
           } else if (!retry) {
             // Try to seed the user, then retry login ONCE
@@ -65,11 +65,14 @@ function LoginForm() {
               return
             }
           }
-          setError("Demo user login failed. Please contact admin.")
+          setError("Login failed. Only demo5@studyblocks.com / demopassword allowed.")
         } catch (e) {
           setError("Network error. Please try again.")
         }
         setLoading(false)
+      } else if (formData.email || formData.password) {
+        setError("Login failed. Only demo5@studyblocks.com / demopassword allowed.");
+        setLoading(false);
       }
     }
     tryLogin()

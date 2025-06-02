@@ -5,8 +5,7 @@ const logger = require('./logger');
 
 // --- Prometheus metrics setup ---
 const promClient = require('prom-client');
-const metricsMiddleware = require('./middleware/metrics');
-const metricsRouter = require('./routes/metrics');
+const metricsMiddleware = require('./middlewares/metrics');
 
 // Enable metrics collection
 promClient.collectDefaultMetrics({
