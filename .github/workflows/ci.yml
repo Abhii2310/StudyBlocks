@@ -25,6 +25,13 @@ jobs:
           if [ -f node_modules/.bin/eslint ]; then npm run lint || true; fi
       - name: Build frontend
         run: npm run build
+      - name: Snyk scan (frontend)
+        uses: snyk/actions/node@v3
+        continue-on-error: true
+        with:
+          command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - name: Test frontend (Cypress, if available)
         run: |
           if [ -f node_modules/.bin/cypress ]; then npm run cypress:run || true; fi
@@ -34,6 +41,14 @@ jobs:
       - name: Lint backend
         run: |
           cd server && if [ -f node_modules/.bin/eslint ]; then npm run lint || true; fi
+      - name: Snyk scan (backend)
+        uses: snyk/actions/node@v3
+        continue-on-error: true
+        with:
+          command: test
+          project: server
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - name: Test backend
         run: |
           cd server && npm test
