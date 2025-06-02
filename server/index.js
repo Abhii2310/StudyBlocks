@@ -66,6 +66,9 @@ app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/reach", contactUsRoute);
 app.use("/api/v1/notes", require("./routes/note"));
 
+// Instructor video upload/review route
+app.use("/api/v1/video-upload", require("./routes/videoUpload"));
+
 // Route to seed demo user for robust demo login
 app.use("/api/seed-demo-user", require("./routes/seedDemoUserRoute"));
 

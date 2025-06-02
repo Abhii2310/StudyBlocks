@@ -19,6 +19,12 @@ export const sidebarLinks = [
     icon: "VscPlayCircle",
   },
   {
+    id: 200,
+    name: "Upload Video",
+    path: "/dashboard/upload-video",
+    icon: "VscCloudUpload",
+  },
+  {
     id: 2,
     name: "Dashboard",
     path: "/dashboard/instructor",

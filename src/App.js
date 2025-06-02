@@ -31,6 +31,7 @@ import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import UploadVideoTest from "./pages/UploadVideoTest";
 import DemoVideos from "./pages/DemoVideos";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
+import UploadVideo from "./pages/UploadVideo";
 
 function App() {
 
@@ -115,6 +116,8 @@ function App() {
       <Route path="dashboard/video-test" element={<UploadVideoTest />} />
       {/* Demo route: Gallery of approved demo videos */}
       <Route path="dashboard/demo-videos" element={<DemoVideos />} />
+      {/* Instructor video upload dashboard */}
+      <Route path="dashboard/upload-video" element={<UploadVideo />} />
 
       {
         user?.accountType === ACCOUNT_TYPE.STUDENT && (
