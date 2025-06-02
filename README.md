@@ -1,5 +1,5 @@
 # StudyBlocks - EdTech Platform
-:rocket: [Link to website][https://studyblocks-frontend.vercel.app/]
+:rocket: [Live Site](https://studyblocks-demo.vercel.app/)
 
 
 ![Main Page](images/mainpage.png)
