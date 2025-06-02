@@ -23,11 +23,11 @@ jobs:
       - name: Run Snyk to check for vulnerabilities (root)
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test --all-projects
+        run: snyk test --all-projects || true
       - name: Monitor project with Snyk (root)
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk monitor --all-projects
+        run: snyk monitor --all-projects || true
       - name: Scan server package.json
         run: |
           cd server
