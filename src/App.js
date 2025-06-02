@@ -27,6 +27,9 @@ import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
 import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
+// Demo/Test route for video evaluation showcase
+import UploadVideoTest from "./pages/UploadVideoTest";
+import DemoVideos from "./pages/DemoVideos";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 
 function App() {
@@ -107,9 +110,11 @@ function App() {
       }
     >
       <Route path="dashboard/my-profile" element={<MyProfile />} />
-      
       <Route path="dashboard/Settings" element={<Settings />} />
-      
+      {/* Demo route: Video upload/evaluation for showcase */}
+      <Route path="dashboard/video-test" element={<UploadVideoTest />} />
+      {/* Demo route: Gallery of approved demo videos */}
+      <Route path="dashboard/demo-videos" element={<DemoVideos />} />
 
       {
         user?.accountType === ACCOUNT_TYPE.STUDENT && (
@@ -127,12 +132,9 @@ function App() {
           <Route path="dashboard/add-course" element={<AddCourse />} />
           <Route path="dashboard/my-courses" element={<MyCourses />} />
           <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
-          
           </>
         )
       }
-
-
     </Route>
 
     

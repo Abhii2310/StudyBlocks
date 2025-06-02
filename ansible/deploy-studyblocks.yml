@@ -1,0 +1,35 @@
+---
+- name: Deploy StudyBlocks backend and ELK stack
+  hosts: studyblocks
+  become: true
+
+  vars:
+    project_dir: /opt/studyblocks
+
+  tasks:
+    - name: Install required apt packages
+      apt:
+        name:
+          - git
+          - docker.io
+          - docker-compose
+        state: present
+        update_cache: yes
+
+    - name: Ensure project directory exists
+      file:
+        path: "{{ project_dir }}"
+        state: directory
+
+    - name: Clone or update StudyBlocks repo
+      git:
+        repo: 'https://github.com/Abhii2310/StudyBlocks.git'
+        dest: "{{ project_dir }}"
+        version: main
+
+    - name: Run docker-compose for ELK stack and backend
+      community.docker.docker_compose:
+        project_src: "{{ project_dir }}"
+        files:
+          - docker-compose.elk.yml
+        state: present

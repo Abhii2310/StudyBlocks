@@ -1,1 +1,33 @@
 {"level":"info","message":"Manual log file initialization for ELK pipeline.","timestamp":"2025-06-02T02:44:00+05:30"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T17:42:12.787Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T17:42:12.789Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T17:44:53.106Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T17:44:53.109Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T17:47:17.713Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T17:47:17.716Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T17:48:08.868Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T17:48:08.870Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T17:49:02.534Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T17:49:02.537Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T17:49:18.908Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T17:49:18.911Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T17:49:48.750Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T17:49:48.755Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T18:00:40.616Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T18:00:40.619Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T18:00:50.446Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T18:00:50.448Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T18:00:57.086Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T18:00:57.090Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T18:01:21.710Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T18:01:21.713Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T18:53:32.370Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T18:53:32.373Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T19:13:16.538Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T19:13:16.541Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T19:21:58.429Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T19:21:58.441Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T19:22:15.352Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T19:22:15.385Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T19:22:37.981Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T19:22:37.982Z"}

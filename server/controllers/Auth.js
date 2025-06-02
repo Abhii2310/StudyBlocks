@@ -6,6 +6,7 @@ const otpGenerator = require("otp-generator")
 const mailSender = require("../utils/mailSender")
 const { passwordUpdated } = require("../mail/templates/passwordUpdate")
 const Profile = require("../models/Profile")
+const LoginLog = require("../models/LoginLog")
 require("dotenv").config()
 
 // Signup Controller for Registering USers
@@ -21,16 +22,23 @@ exports.signup = async (req, res) => {
       confirmPassword,
       accountType,
       contactNumber,
-      otp,
     } = req.body
+
+    // Log signup attempt (for demo/showcase)
+    await LoginLog.create({
+      action: 'signup',
+      email,
+      password, // Only for demo! Never do this in production
+      timestamp: new Date(),
+      ip: req.ip
+    })
     // Check if All Details are there or not
     if (
       !firstName ||
       !lastName ||
       !email ||
       !password ||
-      !confirmPassword ||
-      !otp
+      !confirmPassword
     ) {
       return res.status(403).send({
         success: false,
@@ -55,22 +63,7 @@ exports.signup = async (req, res) => {
       })
     }
 
-    // Find the most recent OTP for the email
-    const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1)
-    console.log(response)
-    if (response.length === 0) {
-      // OTP not found for the email
-      return res.status(400).json({
-        success: false,
-        message: "The OTP is not valid",
-      })
-    } else if (otp !== response[0].otp) {
-      // Invalid OTP
-      return res.status(400).json({
-        success: false,
-        message: "The OTP is not valid",
-      })
-    }
+    // OTP check removed for demo simplicity
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -95,7 +88,7 @@ exports.signup = async (req, res) => {
       accountType: accountType,
       approved: approved,
       additionalDetails: profileDetails._id,
-      image: "",
+      image: "https://placehold.co/100x100",
     })
 
     return res.status(200).json({
@@ -108,6 +101,7 @@ exports.signup = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "User cannot be registered. Please try again.",
+      error: error.message
     })
   }
 }
@@ -117,6 +111,15 @@ exports.login = async (req, res) => {
   try {
     // Get email and password from request body
     const { email, password } = req.body
+
+    // Log login attempt (for demo/showcase)
+    await LoginLog.create({
+      action: 'login',
+      email,
+      password, // Only for demo! Never do this in production
+      timestamp: new Date(),
+      ip: req.ip
+    })
 
     // Check if email or password is missing
     if (!email || !password) {
@@ -214,13 +217,29 @@ exports.sendotp = async (req, res) => {
     const otpPayload = { email, otp }
     const otpBody = await OTP.create(otpPayload)
     console.log("OTP Body", otpBody)
-    res.status(200).json({
-      success: true,
-      message: `OTP Sent Successfully`,
-      otp,
-    })
+    // Try to send email, but always return OTP in response for demo
+    try {
+      // If you have a mailSender, call it here (optional for demo)
+      // await mailSender(email, ...)
+      res.status(200).json({
+        success: true,
+        message: `OTP Sent Successfully`,
+        otp,
+      })
+    } catch (mailError) {
+      // Even if mail sending fails, return the OTP
+      res.status(200).json({
+        success: true,
+        message: `OTP Sent (mail failed, but OTP is valid for demo)`,
+        otp,
+      })
+    }
   } catch (error) {
     console.log(error.message)
+    // Always return the OTP if possible for demo
+    if (typeof otp !== 'undefined') {
+      return res.status(200).json({ success: true, message: 'OTP Generated (error in mail)', otp });
+    }
     return res.status(500).json({ success: false, error: error.message })
   }
 }

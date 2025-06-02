@@ -45,6 +45,10 @@ app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/reach", contactUsRoute);
+app.use("/api/v1/notes", require("./routes/note"));
+
+// Route to seed demo user for robust demo login
+app.use("/api/seed-demo-user", require("./routes/seedDemoUserRoute"));
 
 //def route
 

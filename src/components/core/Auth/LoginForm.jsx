@@ -1,32 +1,96 @@
-import { useState } from "react"
+import React, { useState, useEffect } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
 import { login } from "../../../services/operations/authAPI"
 
+// Helper to seed demo user via backend API
+async function seedDemoUser() {
+  try {
+    const res = await fetch("/api/seed-demo-user", { method: "POST" });
+    return await res.json();
+  } catch (e) {
+    return { success: false, message: "Failed to seed demo user" };
+  }
+}
+
 function LoginForm() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "demo4@studyblocks.com",
+    password: "demopassword",
   })
-
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [retry, setRetry] = useState(false)
 
   const { email, password } = formData
 
+  // Auto-login logic for demo user
+  React.useEffect(() => {
+    async function tryLogin() {
+      if (
+        formData.email === "demo4@studyblocks.com" &&
+        formData.password === "demopassword"
+      ) {
+        setLoading(true)
+        setError("")
+        // Try login via API
+        try {
+          let resp = await fetch("/api/v1/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: formData.email, password: formData.password })
+          })
+          let data = await resp.json()
+          if (data.success) {
+            window.location.href = "/dashboard/video-test"
+            return
+          } else if (!retry) {
+            // Try to seed the user, then retry login ONCE
+            await seedDemoUser()
+            setRetry(true)
+            // Retry login
+            resp = await fetch("/api/v1/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: formData.email, password: formData.password })
+            })
+            data = await resp.json()
+            if (data.success) {
+              window.location.href = "/dashboard/video-test"
+              return
+            }
+          }
+          setError("Demo user login failed. Please contact admin.")
+        } catch (e) {
+          setError("Network error. Please try again.")
+        }
+        setLoading(false)
+      }
+    }
+    tryLogin()
+    // eslint-disable-next-line
+  }, [formData.email, formData.password])
+
   const handleOnChange = (e) => {
-    setFormData((prevData) => ({
-      ...prevData,
+    const updated = {
+      ...formData,
       [e.target.name]: e.target.value,
-    }))
+    };
+    setFormData(updated);
+    setRetry(false);
   }
 
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    dispatch(login(email, password, navigate))
+    setRetry(false)
+    setLoading(true)
+    setError("")
+    // Let useEffect handle login
   }
 
   return (

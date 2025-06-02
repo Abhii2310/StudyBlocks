@@ -7,6 +7,18 @@ export const sidebarLinks = [
     icon: "VscAccount",
   },
   {
+    id: 100,
+    name: "Video Test (Demo)",
+    path: "/dashboard/video-test",
+    icon: "VscDeviceCameraVideo",
+  },
+  {
+    id: 101,
+    name: "Demo Videos",
+    path: "/dashboard/demo-videos",
+    icon: "VscPlayCircle",
+  },
+  {
     id: 2,
     name: "Dashboard",
     path: "/dashboard/instructor",

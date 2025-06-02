@@ -38,7 +38,7 @@ function SignupForm() {
   }
 
   // Handle Form Submission
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault()
 
     if (password !== confirmPassword) {
@@ -50,10 +50,39 @@ function SignupForm() {
       accountType,
     }
 
-    // Setting signup data to state
-    // To be used after otp verification
+    // Special handling for demo user
+    if (formData.email === "demo4@studyblocks.com") {
+      try {
+        // Try to create user via backend (idempotent)
+        const resp = await fetch("/api/seed-demo-user", { method: "POST" });
+        const data = await resp.json();
+        if (data.success) {
+          // Auto-login and redirect to video test dashboard
+          const loginResp = await fetch("/api/v1/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: formData.email, password: formData.password })
+          })
+          const loginData = await loginResp.json();
+          if (loginData.success) {
+            window.location.href = "/dashboard/video-test";
+            return;
+          } else {
+            toast.error("Demo user login failed after signup. Please try again.");
+            return;
+          }
+        } else {
+          toast.error("Could not create demo user. Please try again.");
+          return;
+        }
+      } catch (e) {
+        toast.error("Network error. Please try again.");
+        return;
+      }
+    }
+
+    // Normal signup flow for all other users
     dispatch(setSignupData(signupData))
-    // Send OTP to user for verification
     dispatch(sendOtp(formData.email, navigate))
 
     // Reset
