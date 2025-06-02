@@ -172,7 +172,7 @@ const Footer = () => {
             })}
           </div>
 
-          <div className="text-center">Made with ❤️ CodeHelp © 2023 StudyBlocks</div>
+          <div className="text-center">Made with ❤️ CodeHelp © 2025 StudyBlocks</div>
         </div>
       </div>
     </div>

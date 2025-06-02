@@ -3,6 +3,25 @@ const express = require("express");
 const app = express();
 const logger = require('./logger');
 
+// --- Prometheus metrics setup ---
+const promClient = require('prom-client');
+const metricsMiddleware = require('./middleware/metrics');
+const metricsRouter = require('./routes/metrics');
+
+// Enable metrics collection
+promClient.collectDefaultMetrics({
+  prefix: 'studyblocks_',
+  timeout: 5000,
+  gcDurationBuckets: [0.1, 5, 15, 50, 90, 120],
+});
+
+// Add prometheus metrics middleware
+app.use(metricsMiddleware);
+
+// Add metrics routes
+app.use('/monitoring', metricsRouter);
+// --- End Prometheus metrics setup ---
+
 const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
 const paymentRoutes = require("./routes/Payments");

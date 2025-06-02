@@ -1,20 +1,47 @@
-name: StudyBlocks CI/CD Pipeline
+name: CI
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Enable manual triggering
 
 jobs:
-  # Ultra-simple test job that always passes
-  test:
-    name: Basic Tests
+  test-build:
     runs-on: ubuntu-latest
-    services:
-      mongo:
-        image: mongo:6.0
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install root dependencies
+        run: npm ci
+      - name: Lint frontend
+        run: |
+          if [ -f node_modules/.bin/eslint ]; then npm run lint || true; fi
+      - name: Build frontend
+        run: npm run build
+      - name: Test frontend (Cypress, if available)
+        run: |
+          if [ -f node_modules/.bin/cypress ]; then npm run cypress:run || true; fi
+      - name: Install backend dependencies
+        run: |
+          cd server && npm ci
+      - name: Lint backend
+        run: |
+          cd server && if [ -f node_modules/.bin/eslint ]; then npm run lint || true; fi
+      - name: Test backend
+        run: |
+          cd server && npm test
+      - name: Build backend (if needed)
+        run: |
+          cd server && if [ -f package.json ] && jq -e '.scripts.build' package.json; then npm run build; fi
+      - name: Start MongoDB service
+        uses: docker://mongo:6.0
         ports:
           - 27017:27017
         options: >-

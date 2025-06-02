@@ -31,3 +31,11 @@
 {"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T19:22:15.385Z"}
 {"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T19:22:37.981Z"}
 {"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T19:22:37.982Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T20:49:42.568Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T20:49:42.570Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T21:21:35.251Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T21:21:35.259Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T21:22:12.031Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T21:22:12.034Z"}
+{"level":"info","message":"Server is running at http://localhost:4000","timestamp":"2025-06-02T21:22:51.080Z"}
+{"level":"info","message":"Test log from backend","test":true,"timestamp":"2025-06-02T21:22:51.083Z"}
