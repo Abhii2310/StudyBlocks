@@ -3,7 +3,7 @@
 
 # StudyBlocks - EdTech Platform
 
-> 🚀 Render Deployment Test: This line was added to check if the static site redeploys automatically!
+> ✅ Render Deployment Test: This line was CHANGED to verify auto-deployment is working again!
 
 :rocket: [Live Site](https://studyblocks-demo.vercel.app/)
 
