@@ -1,4 +1,10 @@
+![CI/CD Build](https://github.com/Abhii2310/StudyBlocks/actions/workflows/ci.yml/badge.svg)
+![Postman API Tests](https://github.com/Abhii2310/StudyBlocks/actions/workflows/postman-api-test.yml/badge.svg)
+
 # StudyBlocks - EdTech Platform
+
+> 🚀 Render Deployment Test: This line was added to check if the static site redeploys automatically!
+
 :rocket: [Live Site](https://studyblocks-demo.vercel.app/)
 
 
