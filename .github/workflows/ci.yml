@@ -32,6 +32,28 @@ jobs:
           command: test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Install Newman (Postman CLI)
+        run: npm install -g newman
+
+      - name: Run Postman API tests
+        run: |
+          newman run StudyBlocks-Postman-Collection.json --env-var base_url=http://localhost:4000 --reporters cli,json --reporter-json-export newman/results.json
+        working-directory: .
+
+      - name: Archive Newman reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: postman-reports
+          path: newman/results.json
+
+      - name: Deploy to Render
+        if: success()
+        run: |
+          curl -X POST "$RENDER_DEPLOY_HOOK"
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
       - name: Test frontend (Cypress, if available)
         run: |
           if [ -f node_modules/.bin/cypress ]; then npm run cypress:run || true; fi

@@ -1,0 +1,342 @@
+{
+  "info": {
+    "_postman_id": "studyblocks-api-collection-2025-06-03",
+    "name": "StudyBlocks API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "API collection for StudyBlocks backend (Express, MongoDB). Set `base_url` to your backend, e.g. http://localhost:4000. Use JWT token for protected routes."
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:4000" },
+    { "key": "jwt_token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/auth/login", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "auth", "login" ] }
+          }
+        },
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"confirmPassword\": \"password123\",\n  \"accountType\": \"Student\",\n  \"contactNumber\": \"1234567890\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/auth/signup", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "auth", "signup" ] }
+          }
+        },
+        {
+          "name": "Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/auth/sendotp", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "auth", "sendotp" ] }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"oldPassword\": \"oldpass\",\n  \"newPassword\": \"newpass\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/auth/changepassword", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "auth", "changepassword" ] }
+          }
+        },
+        {
+          "name": "Reset Password Token",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/auth/reset-password-token", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "auth", "reset-password-token" ] }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"token\": \"...\",\n  \"newPassword\": \"newpass\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/auth/reset-password", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "auth", "reset-password" ] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get User Details",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/profile/getUserDetails", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "profile", "getUserDetails" ] }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"...\",\n  \"lastName\": \"...\",\n  \"dateOfBirth\": \"YYYY-MM-DD\",\n  \"about\": \"...\",\n  \"contactNumber\": \"...\",\n  \"gender\": \"...\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/profile/updateProfile", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "profile", "updateProfile" ] }
+          }
+        },
+        {
+          "name": "Delete Profile",
+          "request": {
+            "method": "DELETE",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/profile/deleteProfile", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "profile", "deleteProfile" ] }
+          }
+        },
+        {
+          "name": "Get Enrolled Courses",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/profile/getEnrolledCourses", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "profile", "getEnrolledCourses" ] }
+          }
+        },
+        {
+          "name": "Update Display Picture",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "displayPicture", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{base_url}}/api/v1/profile/updateDisplayPicture", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "profile", "updateDisplayPicture" ] }
+          }
+        },
+        {
+          "name": "Instructor Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/profile/instructorDashboard", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "profile", "instructorDashboard" ] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Course",
+      "item": [
+        {
+          "name": "Create Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"...\",\n  \"description\": \"...\",\n  \"category\": \"...\",\n  \"price\": 0\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/course/createCourse", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "course", "createCourse" ] }
+          }
+        },
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/v1/course/getAllCourses", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "course", "getAllCourses" ] }
+          }
+        },
+        {
+          "name": "Get Course Details",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/v1/course/getCourseDetails/:id", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "course", "getCourseDetails", ":id" ] }
+          }
+        },
+        {
+          "name": "Get Instructor Courses",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/course/getInstructorCourses", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "course", "getInstructorCourses" ] }
+          }
+        },
+        {
+          "name": "Delete Course",
+          "request": {
+            "method": "DELETE",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/course/deleteCourse", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "course", "deleteCourse" ] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment",
+      "item": [
+        {
+          "name": "Capture Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"courses\": [\"courseId1\"]\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/payment/capturePayment", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "payment", "capturePayment" ] }
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"razorpay_order_id\": \"...\",\n  \"razorpay_payment_id\": \"...\",\n  \"razorpay_signature\": \"...\",\n  \"courses\": [\"courseId1\"]\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/payment/verifyPayment", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "payment", "verifyPayment" ] }
+          }
+        },
+        {
+          "name": "Send Payment Success Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"courseId\": \"...\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/payment/sendPaymentSuccessEmail", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "payment", "sendPaymentSuccessEmail" ] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notes",
+      "item": [
+        {
+          "name": "Create Note",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"...\",\n  \"content\": \"...\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/notes/", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "notes", "" ] }
+          }
+        },
+        {
+          "name": "Get Notes",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/notes/", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "notes", "" ] }
+          }
+        },
+        {
+          "name": "Get Note By ID",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/notes/:id", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "notes", ":id" ] }
+          }
+        },
+        {
+          "name": "Update Note",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"...\",\n  \"content\": \"...\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/notes/:id", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "notes", ":id" ] }
+          }
+        },
+        {
+          "name": "Delete Note",
+          "request": {
+            "method": "DELETE",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/notes/:id", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "notes", ":id" ] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Video Upload",
+      "item": [
+        {
+          "name": "Upload Video",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "video", "type": "file", "src": "" },
+                { "key": "title", "type": "text", "value": "Sample Title" },
+                { "key": "description", "type": "text", "value": "Sample Description" },
+                { "key": "category", "type": "text", "value": "Sample Category" },
+                { "key": "language", "type": "text", "value": "English" },
+                { "key": "duration", "type": "text", "value": "10" },
+                { "key": "quality", "type": "text", "value": "true" },
+                { "key": "audio", "type": "text", "value": "true" },
+                { "key": "structure", "type": "text", "value": "true" },
+                { "key": "policy", "type": "text", "value": "true" }
+              ]
+            },
+            "url": { "raw": "{{base_url}}/api/v1/video-upload/upload-video", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "video-upload", "upload-video" ] }
+          }
+        },
+        {
+          "name": "Get My Uploads",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{jwt_token}}" } ],
+            "url": { "raw": "{{base_url}}/api/v1/video-upload/my-uploads", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "video-upload", "my-uploads" ] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "item": [
+        {
+          "name": "Contact Us",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"firstname\": \"John\",\n  \"lastname\": \"Doe\",\n  \"message\": \"Hello!\",\n  \"phoneNo\": \"1234567890\",\n  \"countrycode\": \"+91\"\n}" },
+            "url": { "raw": "{{base_url}}/api/v1/reach/contact", "host": [ "{{base_url}}" ], "path": [ "api", "v1", "reach", "contact" ] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Demo/Seed",
+      "item": [
+        {
+          "name": "Seed Demo User",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{base_url}}/api/seed-demo-user", "host": [ "{{base_url}}" ], "path": [ "api", "seed-demo-user" ] }
+          }
+        }
+      ]
+    }
+  ]
+}

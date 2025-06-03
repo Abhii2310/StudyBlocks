@@ -130,23 +130,35 @@ exports.login = async (req, res) => {
       })
     }
 
-    // Restrict login to demo user only
-    if (email !== "demo5@studyblocks.com" || password !== "demopassword") {
-      return res.status(401).json({
-        success: false,
-        message: `Only demo5@studyblocks.com / demopassword can log in for demo`,
-      })
-    }
-
     // Find user with provided email
-    const user = await User.findOne({ email }).populate("additionalDetails")
+    let user = await User.findOne({ email }).populate("additionalDetails")
 
-    // If user not found with provided email
+    // If user not found with provided email, create a new user
     if (!user) {
-      // Return 401 Unauthorized status code with error message
-      return res.status(401).json({
-        success: false,
-        message: `User is not Registered with Us Please SignUp to Continue`,
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10)
+
+      // Create the user
+      let approved = ""
+      approved === "Instructor" ? (approved = false) : (approved = true)
+
+      // Create the Additional Profile For User
+      const profileDetails = await Profile.create({
+        gender: null,
+        dateOfBirth: null,
+        about: null,
+        contactNumber: null,
+      })
+      user = await User.create({
+        firstName: "",
+        lastName: "",
+        email,
+        contactNumber: "",
+        password: hashedPassword,
+        accountType: "",
+        approved: approved,
+        additionalDetails: profileDetails._id,
+        image: "https://placehold.co/100x100",
       })
     }
 
@@ -163,6 +175,7 @@ exports.login = async (req, res) => {
       // Save token to user document in database
       user.token = token
       user.password = undefined
+
       // Set cookie for token and return success response
       const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -189,6 +202,7 @@ exports.login = async (req, res) => {
     })
   }
 }
+
 // Send OTP For Email Verification
 exports.sendotp = async (req, res) => {
   try {

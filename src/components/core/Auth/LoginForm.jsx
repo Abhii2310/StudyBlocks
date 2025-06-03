@@ -25,59 +25,8 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const [retry, setRetry] = useState(false)
 
   const { email, password } = formData
-
-  // Auto-login logic for demo user
-  React.useEffect(() => {
-    async function tryLogin() {
-      if (
-        formData.email === "demo5@studyblocks.com" &&
-        formData.password === "demopassword"
-      ) {
-        setLoading(true)
-        setError("")
-        // Try login via API
-        try {
-          let resp = await fetch("/api/v1/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: formData.email, password: formData.password })
-          })
-          let data = await resp.json()
-          if (data.success) {
-            window.location.href = "/dashboard/upload-video"
-            return
-          } else if (!retry) {
-            // Try to seed the user, then retry login ONCE
-            await seedDemoUser()
-            setRetry(true)
-            // Retry login
-            resp = await fetch("/api/v1/auth/login", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: formData.email, password: formData.password })
-            })
-            data = await resp.json()
-            if (data.success) {
-              window.location.href = "/dashboard/video-test"
-              return
-            }
-          }
-          setError("Login failed. Only demo5@studyblocks.com / demopassword allowed.")
-        } catch (e) {
-          setError("Network error. Please try again.")
-        }
-        setLoading(false)
-      } else if (formData.email || formData.password) {
-        setError("Login failed. Only demo5@studyblocks.com / demopassword allowed.");
-        setLoading(false);
-      }
-    }
-    tryLogin()
-    // eslint-disable-next-line
-  }, [formData.email, formData.password])
 
   const handleOnChange = (e) => {
     const updated = {
@@ -85,15 +34,29 @@ function LoginForm() {
       [e.target.name]: e.target.value,
     };
     setFormData(updated);
-    setRetry(false);
   }
 
-  const handleOnSubmit = (e) => {
-    e.preventDefault()
-    setRetry(false)
-    setLoading(true)
-    setError("")
-    // Let useEffect handle login
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const resp = await fetch("/api/v1/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email, password: formData.password })
+      });
+      const data = await resp.json();
+      if (data.success) {
+        navigate("/dashboard/user-home");
+        return;
+      } else {
+        setError(data.message || "Login failed. Please try again.");
+      }
+    } catch (e) {
+      setError("Network error. Please try again.");
+    }
+    setLoading(false);
   }
 
   return (
