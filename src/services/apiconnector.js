@@ -5,7 +5,7 @@ export const axiosInstance = axios.create({});
 export const apiConnector = (method, url, bodyData, headers, params) => {
     return axiosInstance({
         method:`${method}`,
-        url:`${url}`,
+        url: url.startsWith("/") ? `${process.env.REACT_APP_API_URL}${url}` : url,
         data: bodyData ? bodyData : null,
         headers: headers ? headers: null,
         params: params ? params : null,

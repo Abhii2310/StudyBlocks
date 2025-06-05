@@ -18,7 +18,7 @@ promClient.collectDefaultMetrics({
 app.use(metricsMiddleware);
 
 // Add metrics routes
-app.use('/monitoring', metricsRouter);
+// app.use('/monitoring', metricsRouter);
 // --- End Prometheus metrics setup ---
 
 const userRoutes = require("./routes/User");
